@@ -41,3 +41,16 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+Dijkstra/bin/Debug/Dijkstra.exe
+Dijkstra/bin/Debug/Dijkstra.vshost.exe
+*.manifest
+Dijkstra/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+Dijkstra/obj/Debug/Dijkstra.csproj.FileListAbsolute.txt
+*.cache
+Dijkstra/obj/Debug/Dijkstra.pdb
+*.exe
+Dijkstra/obj/Debug/TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs
+Dijkstra/obj/Debug/TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs
+*.cs
+Dijkstra/Dijkstra.v11.suo
+*.pdb
