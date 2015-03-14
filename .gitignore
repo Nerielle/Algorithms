@@ -54,3 +54,7 @@ Dijkstra/obj/Debug/TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.c
 *.cs
 Dijkstra/Dijkstra.v11.suo
 *.pdb
+MergeSort/MergeSort.v11.suo
+MergeSort/MergeSort/bin/Debug/MergeSort.exe.config
+MergeSort/MergeSort/bin/Debug/MergeSort.vshost.exe.config
+MergeSort/MergeSort/obj/Debug/MergeSort.csproj.FileListAbsolute.txt
