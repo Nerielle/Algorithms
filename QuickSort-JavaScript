@@ -1,0 +1,65 @@
+function partition(start, end, array){
+/* if(end - start <=1){
+  //  console.log('end ' , end);
+    return end;
+  } */
+	let firstGreater = start;
+	let increment = start;
+	let pivotIndex = end;
+	let pivot = array[pivotIndex];
+	//console.log(array, increment, pivotIndex);
+
+	while(increment < pivotIndex){
+			if(array[increment] > pivot){
+        
+				increment++;
+        //console.log(increment,'>', pivotIndex);
+			}else{
+				swap(increment, firstGreater, array);
+				firstGreater++;
+				increment++;
+      // console.log(increment,'<=', pivotIndex);
+			}
+	}
+	swap(pivotIndex, firstGreater, array);
+   //console.log(array, increment, pivotIndex);
+	return firstGreater;
+}
+
+function swap(i,j,arr){  
+  if(i==j){
+    return;
+  }
+  let ii = arr[i];
+  arr[i] = arr[j];
+  arr[j] = ii;  
+}
+
+function shiftPivotToTheRight(start, end,array){
+	var pivot = Math.floor((end - start)/2);
+	swap(pivot, end, array);
+}
+
+
+
+function sortArray(start, end, array){  
+  if(end - start <=1){
+    return array;
+  }
+  shiftPivotToTheRight(start, end,array);
+  var pivot = partition(start, end, array);
+  debugger;
+  sortArray(start, pivot - 1, array);
+  sortArray(pivot +1, end, array);
+  return array;
+}
+
+function quickSort( array) {
+  sortArray(0, array.length -1, array)
+  return array;
+}
+
+var res = quickSort([1,4,3,6,5,77,3]);
+var res = quickSort([1, 4, 2, 8, 345, 123, 43, 32, 5643, 63, 123, 43, 2, 55, 1, 234, 92]);
+//var res = quickSort( [1,4,2,1]);
+console.log('res', res); 
