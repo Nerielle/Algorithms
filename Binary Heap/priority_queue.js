@@ -5,7 +5,7 @@
 
 /// Here the second value (an integer) represents item priority. 
 ///If we enqueue ['human', 1] with a priority of 1  it would then be the first item to be dequeued. 
-/// I'm using min-heap (Binary Heap)
+/// I'm using min-heap (Binary Heap). collection array is for min-heap, items object= {priority: [items]} provide FIFO.
 function PriorityQueue () {
   this.collection = [];
   this.items = {};
