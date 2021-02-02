@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+
 
 namespace NumberOfIslands
 {
@@ -8,72 +7,65 @@ namespace NumberOfIslands
     {
         static void Main(string[] args)
         {
-        	var twodim=new char[3][];
-		    twodim[0]=new char []{'1','1','1'};
-		    twodim[1]=new char []{'0','1','0'};
-		    twodim[2]=new char []{'1','1','1'};
+            var twodim = new char[4][];
+            twodim[0] = new char[] { '1', '1', '0', '0', '0' };
+            twodim[1] = new char[] { '1', '1', '0', '0', '0' };
+            twodim[2] = new char[] { '0', '0', '1', '0', '0' };
+            twodim[3] = new char[] { '0', '0', '0', '1', '1' };
 
             var res = NumIslands(twodim);
-		
+
             Console.WriteLine("Hello World! : " + res);
         }
 
-        public static int NumIslands(char[][] grid){
-           //var vertices = new List<Vertex>();
-           var count = 0;
-           for(var i = 0; i< grid.Length; i++){
-               for(var j = 0; j< grid[i].Length;j++){
-                if(grid[i][j] == '0')
+        public static int NumIslands(char[][] grid)
+        {
+            //var vertices = new List<Vertex>();
+            var count = 0;
+            for (var i = 0; i < grid.Length; i++)
+            {
+                for (var j = 0; j < grid[i].Length; j++)
                 {
-                    continue;
+                    if (grid[i][j] == '0')
+                    {
+                        continue;
+                    }
+                    Bfs(grid, i, j);
+                    count++;
                 }
-                count+= Traverse(grid, i, j);
-               }
-           }
-          
-          
+            }
+
+
             return count;
         }
 
-        public static int Traverse(char[][] grid, int ii, int jj){
-            var queue = new Queue<Vertex>();
-			queue.Enqueue(new Vertex(ii,jj));
-            grid[ii][jj] = '0';
-            while (queue.Count > 0)
-            {
-                var vertice = queue.Dequeue();
-                
-                var neigbhours = new List<Vertex>();
-                var i = vertice.I;
-                var j = vertice.J;
-                var left= j - 1;		
-		        var up = i - 1;
-                var right = j + 1;
-                var down = i + 1;
-                if(left>-1 ) { neigbhours.Add(new Vertex(i, left));}
-                if(up>-1 ) { neigbhours.Add(new Vertex(up, j));}
-                if(right < grid[i].Length) {neigbhours.Add(new Vertex(i, right));}
-                if(down < grid.Length) {neigbhours.Add(new Vertex(down,j));}
 
-                //add to queue not visited neigbhours
-                foreach (var n in neigbhours)
-                {
-                    if(grid[n.I][n.J] == '1')
-                    {
-                        grid[n.I][n.J]  = '0';
-                        queue.Enqueue(n);
-                    }
-                }
-                
+
+        private static void Bfs(char[][] grid, int i, int j)
+        {
+            if (i < 0 || j < 0 || i > grid.Length - 1 || j > grid[i].Length - 1)
+            {
+                return;
             }
-            return 1;
+
+            if (grid[i][j] == '0')
+            {
+                return;
+            }
+
+            grid[i][j] = '0';
+            Bfs(grid, i - 1, j);
+            Bfs(grid, i + 1, j);
+            Bfs(grid, i, j - 1);
+            Bfs(grid, i, j + 1);
         }
 
         public class Vertex
         {
-            public int I { get; private set;}
-            public int J { get; private set;}
-            internal Vertex(int row, int column){
+            public int I { get; private set; }
+            public int J { get; private set; }
+            internal Vertex(int row, int column)
+            {
                 I = row;
                 J = column;
             }
