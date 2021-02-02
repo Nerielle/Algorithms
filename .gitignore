@@ -64,3 +64,13 @@ MergeSort/MergeSort/obj/Debug/TemporaryGeneratedFile_5937a670-0e60-4077-877b-f72
 bin
 Dijkstra/bin/Debug/Dijkstra.exe.config
 Dijkstra/bin/Debug/Dijkstra.vshost.exe.config
+LeetCode/NumberOfIslands/obj/NumberOfIslands.csproj.nuget.dgspec.json
+LeetCode/NumberOfIslands/obj/NumberOfIslands.csproj.nuget.g.props
+LeetCode/NumberOfIslands/obj/NumberOfIslands.csproj.nuget.g.targets
+LeetCode/NumberOfIslands/obj/project.assets.json
+LeetCode/NumberOfIslands/obj/Debug/net5.0/.NETCoreApp,Version=v5.0.AssemblyAttributes.cs
+LeetCode/NumberOfIslands/obj/Debug/net5.0/NumberOfIslands.AssemblyInfo.cs
+LeetCode/NumberOfIslands/obj/Debug/net5.0/NumberOfIslands.csproj.FileListAbsolute.txt
+LeetCode/NumberOfIslands/obj/Debug/net5.0/NumberOfIslands.dll
+LeetCode/NumberOfIslands/obj/Debug/net5.0/NumberOfIslands.GeneratedMSBuildEditorConfig.editorconfig
+LeetCode/NumberOfIslands/obj/Debug/net5.0/ref/NumberOfIslands.dll
