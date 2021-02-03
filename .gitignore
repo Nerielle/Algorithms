@@ -46,7 +46,5 @@ Temporary Items
 *.exe
 *.pdb
 *.suo
-bin
-
 */bin/*.*
 */obj/*.*
