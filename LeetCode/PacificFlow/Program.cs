@@ -1,19 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+
 namespace PacificFlow
 {
     class Program
     {
+        /*
+        Given the following 5x5 matrix:
+
+         Pacific ~   ~   ~   ~   ~ 
+             ~  1   2   2   3  (5) *
+             ~  3   2   3  (4) (4) *
+             ~  2   4  (5)  3   1  *
+             ~ (6) (7)  1   4   5  *
+             ~ (5)  1   1   2   4  *
+             *   *   *   *   * Atlantic
+
+        Return:
+
+        [[0, 4], [1, 3], [1, 4], [2, 2], [3, 0], [3, 1], [4, 0]] (positions with parentheses in above matrix).
+        */
 
         static void Main(string[] args)
         {
-            var matrix = new int[0][];
-           // matrix[0] = new int[]{1};
-           //  matrix[1] = new int[]{3};
-            // matrix[2] = new int[]{7,8,9,6};
-            
-            
+            var matrix = new int[5][];
+            matrix[0] = new int[] { 1, 2, 2, 3, 5 };
+            matrix[1] = new int[] { 3, 2, 3, 4, 4 };
+            matrix[2] = new int[] { 2, 4, 5, 3, 1 };
+            matrix[3] = new int[] { 6, 7, 1, 4, 5 };
+            matrix[4] = new int[] { 5, 1, 1, 2, 4 };
+
 
             var res = PacificAtlantic(matrix);
             Console.WriteLine("Count! " + res.Count);
@@ -27,87 +43,108 @@ namespace PacificFlow
         public static IList<IList<int>> PacificAtlantic(int[][] matrix)
         {
             IList<IList<int>> res = new List<IList<int>>();
-            if(matrix.Length <=1  || matrix[0].Length <=1){
-                for (int i = 0; i < matrix.Length; i++)
-                {
-                    for (int j = 0; j < matrix[0].Length; j++)
-                    {
-                        res.Add(new List<int>(){i,j});
-                    }
-                }
+            if (matrix.Length == 0 || matrix[0].Length == 0)
+            {
                 return res;
             }
+
+
             Dictionary<(int, int), string> visited = new Dictionary<(int, int), string>();
-            for (int i = 0; i < matrix.Length ; i++)
-            {
-                for (int j = 0; j < matrix[0].Length ; j++)
-                {
-                    Bfs(matrix, i, j, visited);
-                }
-            }
+            PacificFlow(matrix, visited);
+            AtlanticFlow(matrix, visited);
 
             foreach (var item in visited)
             {
+                var row = item.Key.Item1;
+                var col = item.Key.Item2;
                 if (item.Value.Contains(Pacific) && item.Value.Contains(Atlantic))
                 {
-                    res.Add(new List<int>() { item.Key.Item1, item.Key.Item2 });
+                    res.Add(new List<int>() { row, col });
                 }
+
             }
             return res;
         }
         public static string Atlantic = "A";
         public static string Pacific = "P";
 
-
-        public static void Bfs(int[][] matrix, int row, int col, Dictionary<(int, int), string> visited)
+        public static void PacificFlow(int[][] matrix, Dictionary<(int, int), string> visited)
         {
-
-            if (row < 0 || col < 0 || row >= matrix.Length || col >= matrix[0].Length || visited.ContainsKey((row, col)))
+            for (int i = 0; i < matrix.Length; i++)
             {
-                return;
-            }
-            if ((row == 0 && col == matrix[0].Length - 1) || (row == matrix.Length - 1 && col == 0))
-            {
-                visited[(row, col)] = Pacific + Atlantic;
-                return;
-            }
-
-
-            visited.Add((row, col), "");
-            if (row == 0 || col == 0)
-            {
-                visited[(row, col)] += Pacific;
-
-            }
-            if (row == matrix.Length - 1 || col == matrix[0].Length - 1)
-            {
-                visited[(row, col)] += Atlantic;
-
-            }
-            if ((row > 0 && matrix[row][col] >= matrix[row - 1][col]) || (col > 0 && matrix[row][col] >= matrix[row][col - 1]))
-            {
-
-                Bfs(matrix, row - 1, col, visited);
-                Bfs(matrix, row, col - 1, visited);
-                if ((row > 0 && visited[(row - 1, col)].Contains(Pacific)) || (col > 0 && visited[(row, col - 1)].Contains(Pacific)))
+                for (int j = 0; j < matrix[0].Length; j++)
                 {
-                    visited[(row, col)] += Pacific;
+                    Bfs(matrix, i, j, visited, Pacific);
                 }
             }
-            if ((row < matrix.Length - 1 && matrix[row][col] >= matrix[row + 1][col]) || (col < matrix[0].Length - 1 && matrix[row][col] >= matrix[row][col + 1]))
-            {
+        }
+        public static void AtlanticFlow(int[][] matrix, Dictionary<(int, int), string> visited)
+        {
 
-                Bfs(matrix, row + 1, col, visited);
-                Bfs(matrix, row, col + 1, visited);
-                if ((row < matrix.Length - 1 && visited[(row + 1, col)].Contains(Atlantic)) || (col < matrix[0].Length - 1 && visited[(row, col + 1)].Contains(Atlantic)))
+            for (int j = matrix[0].Length - 1; j >= 0; j--)
+            {
+                for (int i = 0; i < matrix.Length; i++)
                 {
-                    visited[(row, col)] += Atlantic;
+                    Bfs(matrix, i, j, visited, Atlantic);
+                }
+            }
+        }
+        public static void Bfs(int[][] matrix, int row, int col, Dictionary<(int, int), string> visited, string flow)
+        {
+            if (visited.ContainsKey((row, col)) && visited[(row, col)].Contains(flow))
+            {
+                return;
+            }
+            var leftFlow = col != 0 && visited.ContainsKey((row, col - 1)) ? visited[(row, col - 1)] : "";
+            var upFlow = row != 0 && visited.ContainsKey((row - 1, col)) ? visited[(row - 1, col)] : "";
+            var downFlow = row != matrix.Length - 1 && visited.ContainsKey((row + 1, col)) ? visited[(row + 1, col)] : "";
+            var rightFlow = col != matrix[0].Length - 1 && visited.ContainsKey((row, col + 1)) ? visited[(row, col + 1)] : "";
+
+            var left = leftFlow.Contains(flow) && matrix[row][col] >= matrix[row][col - 1];
+            var up = upFlow.Contains(flow) && matrix[row][col] >= matrix[row - 1][col];
+            var right = rightFlow.Contains(flow) && matrix[row][col] >= matrix[row][col + 1];
+            var down = downFlow.Contains(flow) && matrix[row][col] >= matrix[row + 1][col];
+            var isPacificShore = flow == Pacific && (row == 0 || col == 0);
+            var isAtlanticShore = flow == Atlantic && (row == matrix.Length - 1 || col == matrix[0].Length - 1);
+
+            if (isPacificShore || isAtlanticShore || left || up || right || down)
+            {
+                if (visited.ContainsKey((row, col)))
+                {
+                    visited[(row, col)] += flow;
+                }
+                else
+                {
+                    visited.Add((row, col), flow);
+                }
+            }
+            if (visited.ContainsKey((row, col)) && visited[(row, col)].Contains(flow))
+            {
+                if (col != 0 && !leftFlow.Contains(flow) && matrix[row][col] <= matrix[row][col - 1])
+                {
+                    Bfs(matrix, row, col - 1, visited, flow);
+                }
+                if (row != 0 && !upFlow.Contains(flow) && matrix[row][col] <= matrix[row - 1][col])
+                {
+                    Bfs(matrix, row - 1, col, visited, flow);
+                }
+                if (row != matrix.Length - 1 && !downFlow.Contains(flow) && matrix[row][col] <= matrix[row + 1][col])
+                {
+                    Bfs(matrix, row + 1, col, visited, flow);
+                }
+                if (col != matrix[0].Length - 1 && !rightFlow.Contains(flow) && matrix[row][col] <= matrix[row][col + 1])
+                {
+                    Bfs(matrix, row, col + 1, visited, flow);
                 }
             }
 
 
         }
 
-
+        private static void ProcessNeighbour(int[][] matrix, int row, int col, Dictionary<(int, int), string> visited, string flow, List<(int, int)> neighbours)
+        {
+            Bfs(matrix, row, col, visited, flow);
+            neighbours.Add((row, col));
+        }
     }
 }
