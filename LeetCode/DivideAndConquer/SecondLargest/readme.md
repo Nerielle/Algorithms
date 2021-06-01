@@ -6,8 +6,8 @@ Give an algorithm that identifies the <b>second-largest number</b> in the array,
 <h2>Implementation</h2> 
 We compare elements on odd and even positions and configure a new array consisting of maximum of each pair. We do that recursively untill we find max element. 
 It would be <em>n-1</em> comparisons.
-We have compaired max element of the array with  <em>log<sub>2</sub> n</em> another elements.
-
+We have compared max element of the array with  <em>log<sub>2</sub> n</em> another elements.
+Second largest would be one of them and would be found at <em>log<sub>2</sub> n - 1 </em> comparisons.
 So the entire number of comparisons would be:
-<em>n+log<sub>2</sub> n -1</em>.
+<em>n+log<sub>2</sub> n - 2</em>.
 
