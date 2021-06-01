@@ -9,5 +9,5 @@ It would be <em>n-1</em> comparisons.
 We have compaired max element of the array with  <em>log<sub>2</sub> n</em> another elements.
 
 So the entire number of comparisons would be:
-<em>n+log<sub>2</sub> n -1</em>.
+<em>n+log<sub>2</sub> n - 2</em>.
 
